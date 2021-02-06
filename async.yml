@@ -1,0 +1,78 @@
+asyncapi: 2.0.0
+info:
+  title: PikaCourse Async API
+  version: 1.0.0
+  description: PikaCourse Async API specs
+servers:
+  dev:
+    url: test-homiehomie.thexyzlab.studio
+    protocol: ws
+    description: Development test server
+  prod:
+    url: pikacourse.com
+    protocol: ws
+    description: Production server
+defaultContentType: application/json
+tags:
+  - name: chat
+    description: Chat related async operation
+channels:
+  ws/chat/course/{coursemetaid}:
+    description: Course chat API
+    parameters:
+      coursemetaid:
+        description: Course Meta object id
+        schema:
+          type: integer
+    subscribe:
+      tags:
+        - name: chat
+      summary: Subscribe to a course for chat messages
+      message:
+        $ref: '#/components/messages/ChatMessage'
+    publish:
+      tags:
+        - name: chat
+      summary: Send message to a course chat room specified by `coursemetaid`
+      message:
+        $ref: '#/components/messages/ChatMessage'
+components:
+  messages:
+    ChatMessage:
+      title: Chat Message format
+      summary: Message format used for PikaCourse text chat 
+      payload:
+        type: object
+        properties:
+          user:
+            type: object
+            description: Sender User info
+            $ref: '#/components/schemas/UserInfo'
+          message:
+            type: object
+            $ref: '#/components/schemas/TextMessage'
+  schemas:
+    UserInfo:
+      type: object
+      description: User info schema
+      properties:
+        id:
+          type: integer
+          description: User id
+        avatarUrl:
+          type: string
+          format: url
+          description: User avatar image Url
+    TextMessage:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Message text content
+          example: Hello World
+        timestamp:
+          type: string
+          description: Time this message is created/produced
+          format: date-time
+          example: 1985-04-12T23:20:50.52Z
+
