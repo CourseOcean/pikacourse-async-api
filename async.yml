@@ -104,7 +104,7 @@ components:
           example: Hello World
         timestamp:
           type: string
-          description: Time this message is created/produced
+          description: Time this message is created/produced, ignored in `publish` action
           format: date-time
           example: 1985-04-12T23:20:50.52Z
 
