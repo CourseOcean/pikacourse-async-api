@@ -90,6 +90,11 @@ components:
         title:
           type: string
           description: course title
+          example: AAEC-2035
+        school:
+          type: string
+          description: course university
+          example: Purdue University
     TextMessage:
       type: object
       properties:
