@@ -54,6 +54,9 @@ components:
       payload:
         type: object
         properties:
+          id:
+            type: integer
+            description: Message id, ignored in `publish` action
           user:
             type: object
             description: Sender User info from send request auth
@@ -73,6 +76,8 @@ components:
         id:
           type: integer
           description: User id
+        username:
+          type: string
         avatarUrl:
           type: string
           format: url
@@ -95,9 +100,6 @@ components:
     TextMessage:
       type: object
       properties:
-        id:
-          type: integer
-          description: Message id, ignored in `publish` action
         text:
           type: string
           description: Message text content
