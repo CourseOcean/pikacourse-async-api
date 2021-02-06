@@ -29,18 +29,18 @@ channels:
         - name: chat
       summary: Subscribe to a course for chat messages
       message:
-        $ref: '#/components/messages/ChatMessage'
+        $ref: '#/components/messages/CourseChatRecMessage'
     publish:
       tags:
         - name: chat
       summary: Send message to a course chat room specified by `coursemetaid`
       message:
-        $ref: '#/components/messages/ChatMessage'
+        $ref: '#/components/messages/CourseChatSendMessage'
 components:
   messages:
-    ChatMessage:
-      title: Chat Message format
-      summary: Message format used for PikaCourse text chat 
+    CourseChatSendMessage:
+      title: Course Chat publish message format
+      summary: Message format used for sending a message to PikaCourse course chat 
       payload:
         type: object
         properties:
@@ -48,6 +48,23 @@ components:
             type: object
             description: Sender User info
             $ref: '#/components/schemas/UserInfo'
+          message:
+            type: object
+            $ref: '#/components/schemas/TextMessage'
+    CourseChatRecMessage:
+      title: Course chat subscribe messsage format
+      Summary: Message format used when receiving a message from PikaCourse course chat
+      payload:
+        type: object
+        properties:
+          user:
+            type: object
+            description: Sender User info
+            $ref: '#/components/schemas/UserInfo'
+          course:
+            type: object
+            description: Chat corresponding course
+            $ref: '#/components/schemas/CourseInfo'
           message:
             type: object
             $ref: '#/components/schemas/TextMessage'
@@ -63,9 +80,22 @@ components:
           type: string
           format: url
           description: User avatar image Url
+    CourseInfo:
+      type: object
+      description: Course info schema
+      properties:
+        id:
+          type: integer
+          description: course meta object id
+        title:
+          type: string
+          description: course title
     TextMessage:
       type: object
       properties:
+        id:
+          type: integer
+          description: Message id, ignored in `publish` action
         text:
           type: string
           description: Message text content
