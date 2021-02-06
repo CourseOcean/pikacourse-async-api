@@ -53,7 +53,7 @@ components:
             $ref: '#/components/schemas/TextMessage'
     CourseChatRecMessage:
       title: Course chat subscribe messsage format
-      Summary: Message format used when receiving a message from PikaCourse course chat
+      summary: Message format used when receiving a message from PikaCourse course chat
       payload:
         type: object
         properties:
