@@ -41,13 +41,10 @@ components:
     CourseChatSendMessage:
       title: Course Chat publish message format
       summary: Message format used for sending a message to PikaCourse course chat 
+      description: Send a message to the specific course chat room. Sender info will be injected in the backend
       payload:
         type: object
         properties:
-          user:
-            type: object
-            description: Sender User info
-            $ref: '#/components/schemas/UserInfo'
           message:
             type: object
             $ref: '#/components/schemas/TextMessage'
@@ -59,7 +56,7 @@ components:
         properties:
           user:
             type: object
-            description: Sender User info
+            description: Sender User info from send request auth
             $ref: '#/components/schemas/UserInfo'
           course:
             type: object
