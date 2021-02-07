@@ -17,7 +17,7 @@ tags:
   - name: chat
     description: Chat related async operation
 channels:
-  ws/chat/course/{coursemetaid}:
+  ws/chat/coursemeta/{coursemetaid}:
     description: Course chat API
     parameters:
       coursemetaid:
