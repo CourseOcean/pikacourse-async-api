@@ -61,6 +61,9 @@ components:
             type: object
             description: Sender User info from send request auth
             $ref: '#/components/schemas/UserInfo'
+          sender:
+            type: boolean
+            description: Is this message send by receiver
           course:
             type: object
             description: Chat corresponding course
