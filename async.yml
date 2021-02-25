@@ -29,16 +29,35 @@ channels:
         - name: chat
       summary: Subscribe to a course for chat messages
       message:
-        $ref: '#/components/messages/CourseChatRecMessage'
+        $ref: '#/components/messages/ChatRecMessage'
     publish:
       tags:
         - name: chat
       summary: Send message to a course chat room specified by `coursemetaid`
       message:
-        $ref: '#/components/messages/CourseChatSendMessage'
+        $ref: '#/components/messages/ChatSendMessage'
+  ws/chat/room/{roomid}:
+    description: Generic chat API
+    parameters:
+      roomid:
+        description: chat room object id
+        schema:
+          type: integer
+    subscribe:
+      tags:
+        - name: chat
+      summary: Subscribe to a room for chat messages
+      message:
+        $ref: '#/components/messages/ChatRecMessage'
+    publish:
+      tags:
+        - name: chat
+      summary: Send message to a chat room specified by `roomid`
+      message:
+        $ref: '#/components/messages/ChatSendMessage'
 components:
   messages:
-    CourseChatSendMessage:
+    ChatSendMessage:
       title: Course Chat publish message format
       summary: Message format used for sending a message to PikaCourse course chat 
       description: Send a message to the specific course chat room. Sender info will be injected in the backend
@@ -48,7 +67,7 @@ components:
           message:
             type: object
             $ref: '#/components/schemas/TextMessage'
-    CourseChatRecMessage:
+    ChatRecMessage:
       title: Course chat subscribe messsage format
       summary: Message format used when receiving a message from PikaCourse course chat
       payload:
@@ -64,9 +83,9 @@ components:
           sender:
             type: boolean
             description: Is this message send by receiver
-          course:
+          room:
             type: object
-            description: Chat corresponding course
+            description: Chat room info
             $ref: '#/components/schemas/CourseInfo'
           message:
             type: object
