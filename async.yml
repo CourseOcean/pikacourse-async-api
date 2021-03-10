@@ -57,9 +57,6 @@ components:
           id:
             type: integer
             description: Message id, ignored in `publish` action
-          room_id:
-            type: string
-            description: Message room id
           user:
             type: object
             description: Sender User info from send request auth
@@ -67,10 +64,10 @@ components:
           sender:
             type: boolean
             description: Is this message send by receiver
-          room:
+          meta:
             type: object
             description: Chat room info
-            $ref: '#/components/schemas/CourseInfo'
+            $ref: '#/components/schemas/MetaInfo'
           message:
             type: object
             $ref: '#/components/schemas/TextMessage'
@@ -88,21 +85,21 @@ components:
           type: string
           format: url
           description: User avatar image Url
-    CourseInfo:
+    MetaInfo:
       type: object
-      description: Course info schema
+      description: Chat room info schema
       properties:
         id:
           type: integer
-          description: course meta object id
+          description: chat room id
         title:
           type: string
-          description: course title
-          example: AAEC-2035
-        school:
-          type: string
-          description: course university
-          example: Purdue University
+          description: chat room title
+          example: Discussion on this
+        creator:
+          type: object
+          description: Creator/admin of chat room
+          $ref: '#/components/schemas/UserInfo'
     TextMessage:
       type: object
       properties:
