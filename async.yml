@@ -1,7 +1,7 @@
 asyncapi: 2.0.0
 info:
   title: PikaCourse Async API
-  version: 1.0.0
+  version: 2.0.0
   description: PikaCourse Async API specs
 servers:
   dev:
@@ -17,13 +17,13 @@ tags:
   - name: chat
     description: Chat related async operation
 channels:
-  ws/chat/coursemeta/{coursemetaid}:
-    description: Course chat API
+  ws/chat/room/{roomid}:
+    description: chat API
     parameters:
-      coursemetaid:
-        description: Course Meta object id
+      roomid:
+        description: Chat room id
         schema:
-          type: integer
+          type: string
     subscribe:
       tags:
         - name: chat
@@ -33,26 +33,7 @@ channels:
     publish:
       tags:
         - name: chat
-      summary: Send message to a course chat room specified by `coursemetaid`
-      message:
-        $ref: '#/components/messages/ChatSendMessage'
-  ws/chat/room/{roomid}:
-    description: Generic chat API
-    parameters:
-      roomid:
-        description: chat room object id
-        schema:
-          type: integer
-    subscribe:
-      tags:
-        - name: chat
-      summary: Subscribe to a room for chat messages
-      message:
-        $ref: '#/components/messages/ChatRecMessage'
-    publish:
-      tags:
-        - name: chat
-      summary: Send message to a chat room specified by `roomid`
+      summary: Send message to a chat room specified by `roomid` in the url field
       message:
         $ref: '#/components/messages/ChatSendMessage'
 components:
@@ -76,6 +57,9 @@ components:
           id:
             type: integer
             description: Message id, ignored in `publish` action
+          room_id:
+            type: string
+            description: Message room id
           user:
             type: object
             description: Sender User info from send request auth
