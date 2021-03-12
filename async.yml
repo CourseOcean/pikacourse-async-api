@@ -16,6 +16,7 @@ defaultContentType: application/json
 tags:
   - name: chat
     description: Chat related async operation
+  - name: user
 channels:
   ws/chat/room/{roomid}:
     description: chat API
@@ -36,6 +37,15 @@ channels:
       summary: Send message to a chat room specified by `roomid` in the url field
       message:
         $ref: '#/components/messages/ChatSendMessage'
+  ws/user/notification:
+    description: User notification websocket API
+    subscribe:
+      tags:
+        - name: user
+      summary: Notification payload received from server
+      message:
+        $ref: '#/components/messages/NotificationMessage'
+    
 components:
   messages:
     ChatSendMessage:
@@ -71,6 +81,11 @@ components:
           message:
             type: object
             $ref: '#/components/schemas/TextMessage'
+    NotificationMessage:
+      title: User notification message format
+      payload:
+        type: object
+        $ref: '#/components/schemas/PostAnswerObject'
   schemas:
     UserInfo:
       type: object
@@ -112,4 +127,26 @@ components:
           description: Time this message is created/produced, ignored in `publish` action
           format: date-time
           example: 1985-04-12T23:20:50.52Z
+    PostAnswerObject:
+      type: object
+      properties:
+        post:
+          type: integer
+        postee:
+          type: object
+          description: User who answer this post
+          $ref: '#/components/schemas/UserInfo'
+        created_at:
+          type: string
+          description: date and time this note is created
+        last_edited:
+          type: string
+        like_count:
+          type: integer
+        star_count:
+          type: integer
+        dislike_count:
+          type: integer
+        content:
+          type: string
 
